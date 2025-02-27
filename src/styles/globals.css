@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ff-poppins: "Poppins", sans-serif;
+
+    --background: 0 0% 100%;
+    --foreground: 233 14% 52%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --primary-900: 233 17% 21%;
+    --primary-800: 228 29% 86%;
+    --primary-700: 233 14% 37%;
+    --primary-600: 231 14% 45%;
+    --primary-500: 233 14% 52%;
+    --primary-400: 232 14% 59%;
+    --primary-300: 234 16% 67%;
+    --primary-200: 232 18% 76%;
+    --primary-100: 228 29% 86%;
+    --primary-50: 245 50% 95%;
+    --primary-foreground: 245 50% 95%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --complementary-green: 76 100% 46%;
+    --complementary-green-check: 133 100% 34%;
+    --complementary-yellow: 42 99% 53%;
+    --complementary-pink: 342 100% 46%;
+    --complementary-blue: 180 94% 33%;
+    --complementary-blue-positive: 213 74% 49%;
+    --complementary-purple: 284 59% 29%;
+    --complementary-red: 0 94% 31%;
+    --complementary-red-negative: 0 99% 43%;
+    --complementary-disable: 208 14% 90%;
+    --complementary-black: 233 18% 17%;
+    --complementary-white: 240 18% 97%;
+    --complementary-button-arrow: 235 14% 30%;
+
+    --green-900: 69 100% 29%;
+    --green-800: 73 100% 37%;
+    --green-700: 75 100% 42%;
+    --green-600: 76 100% 46%;
+    --green-500: 77 100% 50%;
+    --green-400: 80 97%, 62%;
+    --green-300: 81 100% 71%;
+    --green-200: 81 100% 71%;
+    --green-100: 81 100% 88%;
+    --green-50: 80 100% 95%;
+
+    --blue-dark-600: 232 18% 76%;
+    --blue-dark-500: 232 14% 59%;
+    --blue-dark-200: 231 14% 45%;
+
+    --blue-900: 236 65% 49%;
+    --blue-800: 222 84% 52%;
+    --blue-700: 216 100% 53%;
+    --blue-600: 209 100% 50%;
+    --blue-500: 205 100% 50%;
+    --blue-400: 202 100% 52%;
+    --blue-300: 205 100% 65%;
+    --blue-200: 207 100% 77%;
+    --blue-100: 208 100% 86%;
+    --blue-50: 207 100% 94%;
+
+    --purple-900: 273 100% 31%;
+    --purple-800: 282 93% 34%;
+    --purple-700: 286 89% 36%;
+    --purple-600: 291 85% 38%;
+    --purple-500: 295 83% 40%;
+    --purple-400: 295 53% 51%;
+    --purple-300: 294 53% 61%;
+    --purple-200: 294 54% 72%;
+    --purple-100: 296 51% 83%;
+    --purple-50: 296 49% 93%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: ;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 0 0% 100%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+
+    --primary: 210 40% 98%;
+    --primary-900: 245 50% 95%;
+    --primary-800: 235 14% 30%;
+    --primary-700: 228 29% 86%;
+    --primary-200: 233 14% 37%;
+    --primary-50: 233 17% 21%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --blue-dark-600: 231 14% 45%;
+    --blue-dark-500: 233 14% 52%;
+    --blue-dark-200: 232 18% 76%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --complementary-white: 233 18% 17%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: ;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --ring: 217.2 32.6% 17.5%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  ::-ms-reveal {
+    display: none;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    box-shadow: 0 0 0px 1000px hsl(#fff) inset;
+    -webkit-text-fill-color: hsl(var(--primary-500));
+    -webkit-text-stroke-color: hsl(var(--primary));
+    -webkit-text-size-adjust: none;
+    font-size: var(20px);
+    font-weight: 300;
+  }
+
+  .scroll_primary::-webkit-scrollbar {
+    width: 8px;
+    scrollbar-width: thin;
+  }
+
+  .scroll_primary::-webkit-scrollbar-track {
+    background: hsl(var(--primary-200));
+    border-radius: 20px;
+  }
+
+  .scroll_primary::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--primary-800));
+    border-radius: 20px;
+    cursor: grab;
+  }
+}

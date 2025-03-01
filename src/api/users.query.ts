@@ -5,7 +5,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 export const useGetUsers = (): UseQueryResult<{ users: Array<UsersType> }> =>
   useFetch(
     "/users",
-    { page_size: 9999 },
+    {},
     {
       queryKey: ["users", {}],
       retry: 1,

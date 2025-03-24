@@ -1,10 +1,12 @@
-import { dataTableStyles } from "@/styles/users.styles";
-import { UsersType } from "@/types/users.type";
+import { UsersForm } from "@/schemas/users.schema";
+import { dataTableStyles, newUserModalStyles } from "@/styles/users.styles";
 import { Button } from "@/ui/button";
 import { Icons } from "@/ui/icons";
+import { Switch } from "@/ui/switch";
+import { cn } from "@/utils/tailwind";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const usersColumns = (): Array<ColumnDef<UsersType>> => [
+export const usersColumns = (): Array<ColumnDef<UsersForm>> => [
   {
     accessorKey: "name",
     header: ({ column }): JSX.Element => (
@@ -31,6 +33,11 @@ export const usersColumns = (): Array<ColumnDef<UsersType>> => [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => (row?.original?.status ? "ATIVO" : "INATIVO"),
+    cell: ({ row }) => (
+      <Switch
+        checked={row?.original?.status}
+        className={cn([newUserModalStyles.switch, "cursor-default"])}
+      />
+    ),
   },
 ];

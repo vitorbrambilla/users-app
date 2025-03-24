@@ -1,11 +1,9 @@
-import type { GetInfinitePages } from "@/types/react-query.type";
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
   type QueryFunctionContext,
-  type UseQueryOptions,
+  type UseQueryOptions
 } from "@tanstack/react-query";
 import type { AxiosError, AxiosResponse } from "axios";
 import { api } from "./api";
@@ -22,43 +20,6 @@ export const fetcher = async <T>({
     params: { ...parameters, pageParam },
   });
   return response.data;
-};
-
-export const infiniteFetcher = async <T>({
-  queryKey,
-  pageParam,
-}: QueryFunctionContext<QueryKeyT>): Promise<GetInfinitePages<T>> => {
-  const [url, parameters] = queryKey;
-  const response = await api.get<T>(url, {
-    params: { ...parameters, pageParam },
-  });
-
-  return response.data as GetInfinitePages<T>;
-};
-
-export const useLoadMore = <T>(
-  url: string | null,
-  parameters?: object,
-  options?: object
-) => {
-  const queryKey: QueryKeyT = [url!, parameters];
-
-  const context = useInfiniteQuery<
-    GetInfinitePages<T>,
-    Error,
-    GetInfinitePages<T>,
-    QueryKeyT
-  >({
-    queryKey,
-    queryFn: ({ pageParam, meta, signal }) =>
-      infiniteFetcher<T>({ queryKey, meta, signal, pageParam }),
-    initialPageParam: 1,
-    ...options,
-    getNextPageParam: (lastPage) => lastPage.nextId,
-    getPreviousPageParam: (firstPage) => firstPage.previousId,
-  });
-
-  return context;
 };
 
 export const usePrefetch = <T>(url: string | null, parameters?: object) => {

@@ -1,13 +1,17 @@
 import { usersStyles } from "@/styles/users.styles";
 import type { FunctionComponent } from "@/types/react.type";
+import { Button } from "@/ui/button";
+import { Icons } from "@/ui/icons";
 import SearchInput from "@/ui/search-input";
 
 interface IProps {
+  onOpenModal: () => void;
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
 }
 
 export default function UsersTableHeader({
+  onOpenModal,
   globalFilter,
   setGlobalFilter,
 }: IProps): FunctionComponent {
@@ -24,6 +28,11 @@ export default function UsersTableHeader({
             setGlobalFilter(event.target.value);
           }}
         />
+
+        <Button className={usersStyles.button} onClick={onOpenModal}>
+          <Icons.squarePlus height={16} />
+          NOVO USUÁRIO
+        </Button>
       </div>
     </>
   );

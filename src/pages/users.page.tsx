@@ -1,4 +1,4 @@
-import { useGetUsers, usePostUsers } from "@/api/users.query";
+import { useDeleteUser, useGetUsers, usePostUsers } from "@/api/users.query";
 import { UsersDataTable } from "@/components/users/data-table.component";
 import NewUserModal from "@/components/users/new-user-modal.component";
 import { usersColumns } from "@/components/users/table-columns.component";
@@ -7,6 +7,7 @@ import { toast } from "@/hooks/use-toast";
 import { UsersForm } from "@/schemas/users.schema";
 import { usersStyles } from "@/styles/users.styles";
 import type { FunctionComponent } from "@/types/react.type";
+import { CustomAlertDialog } from "@/ui/custom-alert-dialog";
 import { Icons } from "@/ui/icons";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
@@ -26,6 +27,7 @@ const handleRequestError = (error: AxiosError): void => {
 export default function UsersPage(): FunctionComponent {
   const [selected, setSelected] = useState<UsersForm>({} as UsersForm);
   const [isNewUserModalOpen, setIsNewUserModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const [users, setUsers] = useState<Array<UsersForm>>([]);
 
@@ -36,9 +38,14 @@ export default function UsersPage(): FunctionComponent {
     isError: isGetWithError,
   } = useGetUsers();
   const { mutate: post, isPending: isPostLoading } = usePostUsers();
+  const { mutate: deleteUser, isPending: isDeleteLoading } = useDeleteUser();
 
   const handleRequestSuccess = (type: "create" | "update" | "delete"): void => {
-    setIsNewUserModalOpen(false);
+    if (type === "delete") {
+      setIsDeleteModalOpen(false);
+    } else {
+      setIsNewUserModalOpen(false);
+    }
 
     setSelected({} as UsersForm);
 
@@ -60,6 +67,15 @@ export default function UsersPage(): FunctionComponent {
     post(dataFormatted, {
       onSuccess: () => {
         handleRequestSuccess("create");
+      },
+      onError: handleRequestError,
+    });
+  };
+
+  const handleDelete = (): void => {
+    deleteUser(selected.id, {
+      onSuccess: () => {
+        handleRequestSuccess("delete");
       },
       onError: handleRequestError,
     });
@@ -97,7 +113,11 @@ export default function UsersPage(): FunctionComponent {
               />
 
               <UsersDataTable
-                columns={usersColumns()}
+                columns={usersColumns((item: UsersForm): void => {
+                  setSelected(item);
+
+                  setIsDeleteModalOpen(true);
+                })}
                 data={users}
                 globalFilter={globalFilter}
                 setGlobalFilter={setGlobalFilter}
@@ -114,6 +134,18 @@ export default function UsersPage(): FunctionComponent {
         selectedUser={selected}
         setSelectedUser={setSelected}
         isActionLoading={isPostLoading}
+      />
+
+      <CustomAlertDialog
+        title="Exclusão"
+        description={`Deseja excluir o usuário "${selected?.name}"?`}
+        open={isDeleteModalOpen}
+        onOpenChange={() => {
+          setSelected({} as UsersForm);
+          setIsDeleteModalOpen(!isDeleteModalOpen);
+        }}
+        onAction={handleDelete}
+        isActionLoading={isDeleteLoading}
       />
     </>
   );

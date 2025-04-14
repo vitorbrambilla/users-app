@@ -6,7 +6,9 @@ import { Switch } from "@/ui/switch";
 import { cn } from "@/utils/tailwind";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const usersColumns = (): Array<ColumnDef<UsersForm>> => [
+export const usersColumns = (
+  handleDelete: (item: UsersForm) => void
+): Array<ColumnDef<UsersForm>> => [
   {
     accessorKey: "name",
     header: ({ column }): JSX.Element => (
@@ -38,6 +40,24 @@ export const usersColumns = (): Array<ColumnDef<UsersForm>> => [
         checked={row?.original?.status}
         className={cn([newUserModalStyles.switch, "cursor-default"])}
       />
+    ),
+  },
+  {
+    accessorKey: "actions",
+    header: (): JSX.Element => (
+      <div className={cn([dataTableStyles.flexCenter, "pl-2"])}>
+        <span>Ações</span>
+      </div>
+    ),
+    cell: ({ row }): JSX.Element => (
+      <div className={cn([dataTableStyles.flexCenter, "gap-4"])}>
+        <Icons.trash2
+          className={dataTableStyles.actionIcon}
+          onClick={() => {
+            handleDelete(row.original);
+          }}
+        />
+      </div>
     ),
   },
 ];

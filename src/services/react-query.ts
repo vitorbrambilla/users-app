@@ -3,7 +3,7 @@ import {
   useQuery,
   useQueryClient,
   type QueryFunctionContext,
-  type UseQueryOptions
+  type UseQueryOptions,
 } from "@tanstack/react-query";
 import type { AxiosError, AxiosResponse } from "axios";
 import { api } from "./api";
@@ -163,7 +163,7 @@ export const usePut = <T, S>(
   updater?: (oldData: T, newData: S) => T
 ) => {
   return useGenericMutation<T, S>(
-    (data) => api.put<S>(url, data),
+    (data) => api.put<S>(`${url}/${(data as { id: string })?.id ?? ""}`, data),
     url,
     parameters,
     updater

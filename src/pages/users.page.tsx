@@ -1,4 +1,9 @@
-import { useDeleteUser, useGetUsers, usePostUsers } from "@/api/users.query";
+import {
+  useDeleteUser,
+  useGetUsers,
+  usePostUsers,
+  usePutUsers,
+} from "@/api/users.query";
 import { UsersDataTable } from "@/components/users/data-table.component";
 import NewUserModal from "@/components/users/new-user-modal.component";
 import { usersColumns } from "@/components/users/table-columns.component";
@@ -38,6 +43,7 @@ export default function UsersPage(): FunctionComponent {
     isError: isGetWithError,
   } = useGetUsers();
   const { mutate: post, isPending: isPostLoading } = usePostUsers();
+  const { mutate: put, isPending: isPutLoading } = usePutUsers();
   const { mutate: deleteUser, isPending: isDeleteLoading } = useDeleteUser();
 
   const handleRequestSuccess = (type: "create" | "update" | "delete"): void => {
@@ -64,12 +70,21 @@ export default function UsersPage(): FunctionComponent {
       status: data?.status || false,
     };
 
-    post(dataFormatted, {
-      onSuccess: () => {
-        handleRequestSuccess("create");
-      },
-      onError: handleRequestError,
-    });
+    if (data?.id) {
+      put(dataFormatted, {
+        onSuccess: () => {
+          handleRequestSuccess("update");
+        },
+        onError: handleRequestError,
+      });
+    } else {
+      post(dataFormatted, {
+        onSuccess: () => {
+          handleRequestSuccess("create");
+        },
+        onError: handleRequestError,
+      });
+    }
   };
 
   const handleDelete = (): void => {
@@ -113,11 +128,18 @@ export default function UsersPage(): FunctionComponent {
               />
 
               <UsersDataTable
-                columns={usersColumns((item: UsersForm): void => {
-                  setSelected(item);
+                columns={usersColumns(
+                  (item: UsersForm): void => {
+                    setIsNewUserModalOpen(true);
 
-                  setIsDeleteModalOpen(true);
-                })}
+                    setSelected(item);
+                  },
+                  (item: UsersForm): void => {
+                    setSelected(item);
+
+                    setIsDeleteModalOpen(true);
+                  }
+                )}
                 data={users}
                 globalFilter={globalFilter}
                 setGlobalFilter={setGlobalFilter}
@@ -133,7 +155,7 @@ export default function UsersPage(): FunctionComponent {
         onConfirm={handleAction}
         selectedUser={selected}
         setSelectedUser={setSelected}
-        isActionLoading={isPostLoading}
+        isActionLoading={isPostLoading || isPutLoading}
       />
 
       <CustomAlertDialog

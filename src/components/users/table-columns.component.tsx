@@ -7,6 +7,7 @@ import { cn } from "@/utils/tailwind";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const usersColumns = (
+  handleEdit: (item: UsersForm) => void,
   handleDelete: (item: UsersForm) => void
 ): Array<ColumnDef<UsersForm>> => [
   {
@@ -51,6 +52,13 @@ export const usersColumns = (
     ),
     cell: ({ row }): JSX.Element => (
       <div className={cn([dataTableStyles.flexCenter, "gap-4"])}>
+        <Icons.pencil
+          className={dataTableStyles.actionIcon}
+          onClick={() => {
+            handleEdit(row.original);
+          }}
+        />
+
         <Icons.trash2
           className={dataTableStyles.actionIcon}
           onClick={() => {

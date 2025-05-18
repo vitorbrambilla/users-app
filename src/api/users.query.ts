@@ -1,5 +1,5 @@
 import { UsersForm } from "@/schemas/users.schema";
-import { useDelete, useFetch, usePost } from "@/services/react-query";
+import { useDelete, useFetch, usePost, usePut } from "@/services/react-query";
 import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -19,6 +19,12 @@ export const usePostUsers = (): UseMutationResult<
   AxiosError,
   UsersForm
 > => usePost("/users");
+
+export const usePutUsers = (): UseMutationResult<
+  AxiosResponse,
+  AxiosError,
+  UsersForm
+> => usePut("/users");
 
 export const useDeleteUser = (): UseMutationResult<AxiosResponse, AxiosError> =>
   useDelete("/users");

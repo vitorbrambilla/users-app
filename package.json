@@ -1,18 +1,14 @@
 {
-  "name": "hf-image-converter-app",
+  "name": "users_app",
   "private": true,
   "version": "0.0.2",
   "author": {
     "name": "WeeNow",
     "email": "devops@weenow.com.br"
   },
-  "description": "Image Converter App",
+  "description": "Users App",
   "license": "MIT",
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/weenow/hf-image-converter-app"
-  },
   "engines": {
     "node": ">=18.18.2"
   },
